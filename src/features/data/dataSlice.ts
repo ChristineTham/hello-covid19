@@ -1,24 +1,44 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchData, CompleteFunction} from '../../api/covid19data'
-import { ParseResult } from 'papaparse'
+import { createSlice } from '@reduxjs/toolkit'
+import { covid19Data } from '../../api/covid19Data'
+
+interface DataState {
+  isFetching: boolean
+  lastFetched: number
+  result: any[]
+}
+
+const initialState: DataState = {
+  isFetching: false,
+  lastFetched: 0,
+  result: [],
+}
 
 const dataSlice = createSlice({
   name: 'data',
-  initialState: {} as ParseResult,
+  initialState: initialState,
   reducers: {
-    getData: (state) => {
-      let complete: CompleteFunction
-      complete = (result) => {
-        state = result
+    requestData(state) {
+      if (!state.isFetching) {
+        state.isFetching = true
       }
-
-      fetchData(complete)
+    },
+    receiveData(state, action) {
+      if (state.isFetching) {
+        state.isFetching = false
+        state.result = action.payload
+      }
     },
   },
 })
 
-export const {
-  getData,
-} = dataSlice.actions
+export const { requestData, receiveData } = dataSlice.actions
+
+// Define a thunk that dispatches those action creators
+export const fetchData = () => async (dispatch: (action: { payload: unknown; type: string }) => void) => {
+  dispatch(requestData())
+  const response = await covid19Data()
+  dispatch(receiveData(response))
+  console.log(response)
+}
 
 export default dataSlice.reducer

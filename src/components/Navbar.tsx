@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom'
 
 export const Navbar: React.FC = () => (
   <nav>
-    <div className="nav-wrapper cyan darken-1 px1">
+    <div className="nav-wrapper pink darken-1 px1">
       <NavLink to="/" className="brand-logo">
-        Redux + TypeScript
+        hello CoViD-19
       </NavLink>
       <ul className="right hide-on-med-and-down">
         <li>

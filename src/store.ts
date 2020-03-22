@@ -7,8 +7,8 @@ const store = configureStore({
   reducer: rootReducer,
 })
 
-if (process.env.NODE_ENV === 'development' && module.hot) {
-  module.hot.accept('./rootReducer', () => {
+if (process.env.NODE_ENV === 'development' && (module as any).hot) {
+  (module as any).hot.accept('./rootReducer', () => {
     const newRootReducer = require('./rootReducer').default
     store.replaceReducer(newRootReducer)
   })

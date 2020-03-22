@@ -1,15 +1,18 @@
 import * as Papa from 'papaparse'
 
-export interface CompleteFunction {
-  (result: Papa.ParseResult): void;
-}
-
-export function fetchData(complete: CompleteFunction): void {
+export function covid19Data() {
   const url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
-  Papa.parse(url, {
-    download: true,
-    header: true,
-    dynamicTyping: true,
-    complete: complete,
+  return new Promise((resolve, reject) => {
+    Papa.parse(url, {
+      download: true,
+      header: true,
+      dynamicTyping: true,
+      complete(results, file) {
+        resolve(results.data)
+      },
+      error(err, file) {
+        reject(err)
+      },
+    })
   })
 }
