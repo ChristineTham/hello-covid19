@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { covid19Data } from '../../api/covid19Data'
 
-interface DataState {
+export interface DataState {
   isFetching: boolean
   lastFetched: number
   result: any[]

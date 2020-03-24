@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import Plot from 'react-plotly.js';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 import { RootState } from '../rootReducer'
 
@@ -18,34 +19,40 @@ export const Home: React.FC = () => {
         CoViD-19 is an infectious disease caused by a new virus.
          The source data is obtained from <a href="https://ourworldindata.org/coronavirus-source-data">Our World in Data</a>
       </p>
-      <p>Data count: {data.length}</p>
-      <p>Australia count: {australia.length}</p>
-      <Plot
-        data={[
-          {
-            x: australiaDates,
-            y: australiaTotalCases,
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: { color: 'blue' },
-          }
-        ]}
-        layout={{ title: 'Australia Total Cases' }}
-        config={{displayModeBar: true, responsive: true}}
-      />
-      <Plot
-        data={[
-          {
-            x: australiaDates,
-            y: australiaTotalDeaths,
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: { color: 'red' },
-          }
-        ]}
-        layout={{ title: 'Australia Total Deaths' }}
-        config={{ displayModeBar: true, responsive: true }}
-      />
+      <Grid fluid>
+        <Row>
+          <Col xs={12} md={6}>
+            <Plot
+              data={[
+                {
+                  x: australiaDates,
+                  y: australiaTotalCases,
+                  type: 'scatter',
+                  mode: 'lines+markers',
+                  marker: { color: 'blue' },
+                }
+              ]}
+              layout={{ title: 'Australia Total Cases' }}
+              config={{ displayModeBar: false, responsive: true }}
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <Plot
+              data={[
+                {
+                  x: australiaDates,
+                  y: australiaTotalDeaths,
+                  type: 'scatter',
+                  mode: 'lines+markers',
+                  marker: { color: 'red' },
+                }
+              ]}
+              layout={{ title: 'Australia Total Deaths' }}
+              config={{ displayModeBar: false, responsive: true }}
+            />
+          </Col>
+        </Row>
+      </Grid>
     </Fragment>
   )
 }

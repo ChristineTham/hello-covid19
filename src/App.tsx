@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { Navbar } from './components/Navbar'
 import { About } from './pages/About'
 import { Home } from './pages/Home'
+import { Country } from './pages/Country'
 import { fetchData } from './features/data/dataSlice'
 
 const App: React.FC = () => {
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <div className="container">
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
+          <Route path="/bycountry" component={Country} />
         </div>
       </Switch>
     </BrowserRouter>

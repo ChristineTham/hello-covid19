@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import data, { requestData, receiveData, fetchData } from './dataSlice'
+import data, { requestData, receiveData, fetchData, DataState } from './dataSlice'
 
 const initialState: DataState = {
   isFetching: false,
