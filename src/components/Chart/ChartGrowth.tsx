@@ -10,9 +10,9 @@ interface IChartLineProps {
   titley?: string;
 }
 
-export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
+export const ChartGrowth: React.FC<IChartLineProps> = (props: IChartLineProps) => {
   const lastPoint = Number(props.datay[props.datay.length - 1])
-  const lastLabel = lastPoint.toLocaleString()
+  const lastLabel = (lastPoint * 100).toFixed(1) + '%'
 
   return (
     <Fragment>
@@ -23,7 +23,7 @@ export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => 
             y: props.datay,
             type: 'scatter',
             mode: 'lines+markers',
-            name: 'cases',
+            hovertemplate: '%{y:.1%}',
             marker: { color: props.color ? props.color : 'black'},
           },
           {
@@ -44,7 +44,8 @@ export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => 
             title: (props.titlex ? props.titlex : 'Date')
           },
           yaxis: {
-            title: (props.titley ? props.titley : 'Value')
+            title: (props.titley ? props.titley : 'Value'),
+            tickformat: '.0%',
           },
           showlegend: false,
           annotations: [

@@ -6,6 +6,7 @@ import Select from 'react-select';
 import { RootState } from '../rootReducer'
 
 import { ChartLine } from '../components/Chart/ChartLine';
+import { ChartGrowth } from '../components/Chart/ChartGrowth';
 
 type CountryType = {
   value: string;
@@ -93,19 +94,19 @@ export const Country: React.FC = () => {
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartLine
+            <ChartGrowth
               title={country.value + ' Daily Case Growth %'}
               datax={fData.map((item) => item.date)}
-              datay={fData.map((item) => item.new_cases * 100 / (item.total_cases - item.new_cases))}
+              datay={fData.map((item) => item.new_cases / (item.total_cases - item.new_cases))}
               color="cyan"
               titley='Daily Growth %'
             />
           </Col>
           <Col xs={12} md={6}>
-            <ChartLine
+            <ChartGrowth
               title={country.value + ' Daily Death Growth %'}
               datax={fData.map((item) => item.date)}
-              datay={fData.map((item) => item.new_deaths * 100 / (item.total_deaths - item.new_deaths))}
+              datay={fData.map((item) => item.new_deaths / (item.total_deaths - item.new_deaths))}
               color="orange"
               titley='Daily Growth %'
             />
