@@ -38,7 +38,6 @@ export const fetchData = () => async (dispatch: (action: { payload: unknown; typ
   dispatch(requestData())
   const response = await covid19Data()
   dispatch(receiveData(response))
-  console.log(response)
 }
 
 export default dataSlice.reducer

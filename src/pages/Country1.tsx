@@ -2,13 +2,9 @@ import React, { Fragment, useState } from 'react'
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { useSelector } from 'react-redux'
 import Select from 'react-select';
-import * as dataForge from 'data-forge';
 
 import { RootState } from '../rootReducer'
 
-import { ChartTotalCases } from '../components/Chart/ChartTotalCases';
-import { ChartTotalDeaths } from '../components/Chart/ChartTotalDeaths';
-import { ChartCaseGrowth } from '../components/Chart/ChartCaseGrowth';
 import { ChartLine } from '../components/Chart/ChartLine';
 
 const cOptions = [
@@ -24,20 +20,17 @@ const cOptions = [
 
 type OptionType = typeof cOptions[0]
 
-export const Country: React.FC = () => {
+export const Country1: React.FC = () => {
   const [selectOption, setSelectOption] = useState(cOptions[0])
-  const [country, setCountry] = useState({} as dataForge.IDataFrame)
-  const data = useSelector((state: RootState) => state.data.result) 
-  const df = new dataForge.DataFrame(data)
+  const data = useSelector((state: RootState) => state.data.result)
+  let country = data.filter((item) => item.location === selectOption.value)
 
   const processCountry = (selectedOption: OptionType) => {
-
-    const countryDF = df.where(row => row.location === selectedOption.value)
-    setCountry(countryDF)
+    country = data.filter((item) => item.location === selectedOption.value)
     setSelectOption(selectedOption)
+    // console.log('set country' + selectedOption.value + ' size ' + country.length)
   }
-
-  processCountry(cOptions[0])
+  // console.log('initial country' + selectOption.value + ' size ' + country.length)
 
   return (
     <Fragment>
@@ -62,24 +55,41 @@ export const Country: React.FC = () => {
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartTotalCases country={selectOption.value} />
+            <ChartLine
+              title={selectOption.value + ' Total Cases'}
+              datax={country.map((item) => item.date)}
+              datay={country.map((item) => item.total_cases)}
+              color="blue"
+            />
           </Col>
           <Col xs={12} md={6}>
-            <ChartTotalDeaths country={selectOption.value} />
+            <ChartLine
+              title={selectOption.value + ' Total Deaths'}
+              datax={country.map((item) => item.date)}
+              datay={country.map((item) => item.total_deaths)}
+              color="red"
+            />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartCaseGrowth country={selectOption.value} />
+            <ChartLine
+              title={selectOption.value + ' Daily Case Growth %'}
+              datax={country.map((item) => item.date)}
+              datay={country.map((item) => item.new_cases * 100 / (item.total_cases - item.new_cases))}
+              color="cyan"
+              titley='Daily Growth %'
+            />
           </Col>
           <Col xs={12} md={6}>
             <ChartLine
               title={selectOption.value + ' Total Cases'}
-              datax={country.getSeries("date").toArray()}
-              datay={country.getSeries("total_cases").toArray()}
+              datax={country.map((item) => item.date)}
+              datay={country.map((item) => item.total_cases)}
               color="red"
             />
-          </Col>        </Row>
+          </Col>
+        </Row>
       </Grid>
     </Fragment>
   )

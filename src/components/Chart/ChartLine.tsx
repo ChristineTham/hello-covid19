@@ -5,7 +5,9 @@ interface IChartLineProps {
   title: string;
   datax: any[];
   datay: any[];
-  color: string;
+  color?: string;
+  titlex?: string;
+  titley?: string;
 }
 
 export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
@@ -18,16 +20,16 @@ export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => 
             y: props.datay,
             type: 'scatter',
             mode: 'lines+markers',
-            marker: { color: props.color },
+            marker: { color: props.color ? props.color : 'black'},
           },
         ]}
         layout={{
           title: props.title,
           xaxis: {
-            title: 'Date'
+            title: (props.titlex ? props.titlex : 'Date')
           },
           yaxis: {
-            title: 'Value'
+            title: (props.titley ? props.titley : 'Value')
           }
         }}
         useResizeHandler
