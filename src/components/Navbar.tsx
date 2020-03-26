@@ -9,8 +9,8 @@ export const Navbar: React.FC = () => (
         <NavLink to="/" className="brand-logo">
           &nbsp;hello CoViD-19
       </NavLink>
-        <a href="/" data-target="mobile-sidebar" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
+        <a href="/" data-target="mobile-sidebar" className="sidenav-trigger right"><i className="material-icons">menu</i></a>
+        <ul id="nav-mobile" className="right">
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => (
         </ul>
       </div>
     </nav>
-    <ul className="sidenav" id="mobile-sidebar">
+    <ul className="sidenav right" id="mobile-sidebar">
       <li>
         <NavLink to="/">Home</NavLink>
       </li>

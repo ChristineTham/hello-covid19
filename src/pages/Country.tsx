@@ -45,7 +45,7 @@ export const Country: React.FC = () => {
 
   const latestDate = fData.map(row => row.date).reverse()[0]
   const latest = fData.filter(row => row.date === latestDate)[0]
-  console.log(latest)
+  // console.log(latestDate)
   // console.log(fData.map(row => row.date).reverse())
 
   const processCountry = (selectedOption: CountryType) => {

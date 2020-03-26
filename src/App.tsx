@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { Navbar } from './components/Navbar'
@@ -13,7 +13,7 @@ const App: React.FC = () => {
   dispatch(fetchData())
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Switch>
         <div className="container">
@@ -22,7 +22,7 @@ const App: React.FC = () => {
           <Route path="/bycountry" component={Country} />
         </div>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
