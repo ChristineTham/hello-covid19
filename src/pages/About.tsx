@@ -65,10 +65,11 @@ export const About: React.FC = () => {
           <div className="card-panel pink lighten-5 z-depth-1">
             <div className="row valign-wrapper">
               <div className="col s2">
-                <img src="images/HaHaHa.jpg" alt="Profile" className="circle responsive-img"/>
-            </div>
-                <div className="col s10">
-                  <span className="black-text">
+                <img src="images/HaHaHa.jpg" alt="Profile" className="circle responsive-img" />
+              </div>
+              <div className="col s10">
+                <span className="black-text">
+                    Hello, my name is Chris Tham.
                     I am the Owner and Founder of
                     <a href="https://www.hellotham.com"> Hello Tham </a>
                     (a boutique strategy and management consulting company) and
@@ -77,10 +78,10 @@ export const About: React.FC = () => {
                     I am taking the opportunity during the CoViD-19 pandemic crisis
                     to learn how to write serverless web and mobile apps.
                   </span>
-                </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </Fragment>
   )
