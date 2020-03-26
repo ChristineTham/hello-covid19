@@ -48,7 +48,6 @@ export const Home: React.FC = () => {
       <button type="button" className="btn purple btn-large" onClick={() => history.push('/bycountry')}>
         View Results by Country
       </button>
-      <p>Latest data as at: {latestDate}</p>
       <Grid fluid>
         <Row>
           <Col xs={12} md={6}>

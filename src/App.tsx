@@ -6,7 +6,6 @@ import { Navbar } from './components/Navbar'
 import { About } from './pages/About'
 import { Home } from './pages/Home'
 import { Country } from './pages/Country'
-import { Country1 } from './pages/Country1'
 import { fetchData } from './features/data/dataSlice'
 
 const App: React.FC = () => {
@@ -21,7 +20,6 @@ const App: React.FC = () => {
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
           <Route path="/bycountry" component={Country} />
-          <Route path="/test" component={Country1} />
         </div>
       </Switch>
     </BrowserRouter>
