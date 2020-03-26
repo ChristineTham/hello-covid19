@@ -12,6 +12,10 @@ export const About: React.FC = () => {
         I have been learning Javascript since the start of the CoViD-19 outbreak
         as a way to pass time while staying at home.
       </p>
+      <p>
+        This app is licensed under the MIT licence and the source code is available on
+         <a href="https://github.com/ChristineTham/hello-covid19.git"> GitHub</a>.
+      </p>
       <button type="button" className="btn purple" onClick={() => history.push('/')}>
         Back to home
       </button>
@@ -21,20 +25,20 @@ export const About: React.FC = () => {
           The app is written in React (with Hooks) (using the Materialize front-end framework).
           It fetches the latest CoViD-19 data as a CSV from
           <a href="https://ourworldindata.org/coronavirus-source-data"> Our World in Data </a>
-          using Papaparse asynchronously on load (using `async`/`await`) via the Papaparse
+          using Papaparse asynchronously on load (using <code>async</code>/<code>await</code>) via the Papaparse
           module via Redux Thunk into a Redux store using the Redux Toolkit.
-      </p>
+        </p>
         <p>
           The data is used to render visualisations via Redux React. Data manipulation is done
-          in native Javascript using array methods, and rendered as charts using Ploy.ly JS.
+          in native Javascript using array methods, and rendered as charts using Plot.ly JS.
           React Select is used for the interactive controls.
-      </p>
+        </p>
         <p>
           The application is written in Typescript (with eslint and prettier checking) using
           Visual Studio Code as the editor on macOS. It uses the Create React App build
           framework (with the typescript-redux template) and is served via static web files
           from Surge.sh.
-      </p>
+        </p>
         <div className="row">
           <div className="col s12 m6 offset-m3">
             <ul className="collection with-header">
@@ -42,6 +46,8 @@ export const About: React.FC = () => {
               <li className="collection-item">Create React App with the typescript-redux template</li>
               <li className="collection-item">React (Hooks)</li>
               <li className="collection-item">Redux, React, Redux, Redux Toolkit</li>
+              <li className="collection-item">Materialize CSS framework</li>
+              <li className="collection-item">React Flexbox Grid</li>
               <li className="collection-item">React Select</li>
               <li className="collection-item">Plot.ly JS</li>
               <li className="collection-item">Papaparse</li>

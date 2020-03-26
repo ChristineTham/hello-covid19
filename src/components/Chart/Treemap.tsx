@@ -5,8 +5,6 @@ interface IChartLineProps {
   title: string;
   labels: string[];
   values: number[];
-  titlex?: string;
-  titley?: string;
 }
 
 export const Treemap: React.FC<IChartLineProps> = (props: IChartLineProps) => {
@@ -20,8 +18,8 @@ export const Treemap: React.FC<IChartLineProps> = (props: IChartLineProps) => {
             labels: props.labels,
             parents: parents,
             values: props.values,
-            type: 'heatmap',
-            textinfo: 'label+value+percent'
+            type: 'treemap',
+            textinfo: 'label+value'
           },
         ]}
         layout={{

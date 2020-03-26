@@ -1,33 +1,42 @@
-[![yarn version](https://badge.fury.io/js/cra-template-typescript-redux.svg)](https://badge.fury.io/js/cra-template-typescript-redux)
-[![Action status](https://github.com/alexandr-g/cra-template-typescript-redux/workflows/CI/badge.svg?branch=master)](https://github.com/alexandr-g/cra-template-typescript-redux/actions)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-![yarn downloads](https://img.shields.io/npm/dm/cra-template-typescript-redux)
+# hello Coronavirus (CoViD-19)
 
-# A quick start Redux + TypeScript Create React App template
+This is a simple web app to display real time information about the spread of CoViD-19 around the world.
+CoViD-19 is an infectious disease caused by a new virus.
+The source data is obtained from [Our World in Data](https://ourworldindata.org/coronavirus-source-data)
+and is based on data collected by the European CDC.
 
-An opinionated quick start [Create React App](https://github.com/facebook/create-react-app) (CRA) _template_ with configured **Redux**, **TypeScript**, **React Router**, **Enzyme** and custom **ESlint** configuration.
+This app represents my very first attempt to write a modern serverless web app.
+I have been learning Javascript since the start of the CoViD-19 outbreak
+as a way to pass time while staying at home.
 
-Original Create React App README available [here](./README_CRA.md)
+## App Architecture
 
-## Usage
+The app is written in React (with Hooks) (using the Materialize front-end framework).
+It fetches the latest CoViD-19 data as a CSV from
+[Our World in Data](https://ourworldindata.org/coronavirus-source-data")
+using Papaparse asynchronously on load (using `async`/`await`) via the Papaparse
+module via Redux Thunk into a Redux store using the Redux Toolkit.
 
-```bash
-npx create-react-app your-project-name --template typescript-redux
-```
+The data is used to render visualisations via Redux React. Data manipulation is done
+in native Javascript using array methods, and rendered as charts using Plot.ly JS.
+React Select is used for the interactive controls.
 
-Or
+The application is written in Typescript (with eslint and prettier checking) using
+Visual Studio Code as the editor on macOS. It uses the Create React App build
+framework (with the typescript-redux template) and is served via static web files
+from Surge.sh.
 
-```bash
-yarn create react-app your-project-name --template typescript-redux
-```
+## Technology Stack
 
-`npx` command installs the most recent stable version of CRA from npm.
-
-`--template` parameter points to this template, note that `cra-template-` prefix is omitted.
-
-## Motivation
-
-You know the pain. You start a new project from scratch and need to configure it again and again. It needs routing, ok you setup Router, then you need Redux - ok, oh 😩Redux boilerplate is taking so much time to type. Wait... what if you could have all the tools you want just from the beginning? I want to focus on building amazing projects and not spending hours configuring. That's why I've created this template. It's here for you to use.
+- Create React App with the typescript-redux template
+- React (Hooks)
+- Redux, React, Redux, Redux Toolkit
+- React Select
+- Plot.ly JS
+- Papaparse
+- Typescript with eslint and prettier
+- Visual Studio Code
+- Surge.sh (static/serverless web hosting)
 
 ## Available Scripts
 
@@ -47,50 +56,6 @@ In the project directory, you can run:
 
 Due to CRA template limitations (we can change only `scripts` and `dependencies` inside generated `package.json`) all configuration is done by adding config files where possible. Also no `devDependencies` for now, sorry.
 
-## Redux configuration
-
-The template provides basic Redux configuration with [feature based](https://redux.js.org/style-guide/style-guide/#structure-files-as-feature-folders-or-ducks) folder structure. You can use [Redux devtools browser extension](http://extension.remotedev.io/). Sample feature included in `src/features` folder, note technology agnostic `features` folder name. Based on Redux maintainers recommendation.
-
 ## Testing
 
 Testing is done with [Enzyme](https://airbnb.io/enzyme/).
-
-## [Prettier](https://prettier.io/)
-
-I added `prettier` to force consistent formatting. Don't like trailing semicolons? Feel free to [tweak prettier rules](https://prettier.io/docs/en/configuration.html) inside `.prettierrc` file to match your code style.
-
-## Styles/CSS/Styling
-
-Just for the styling purpose of the example app, I used [Materialize](https://materializecss.com/). The template is shipped with the Materialize by default. I want to make sure that this template is style agnostic so you can plugin any CSS-in-JS or whatever library/framework you want to use for styles on your own.
-
-### How to remove materialize
-
-In order to remove Materialize [MaterializeCSS](https://materializecss.com/) navigate to the `public` folder, open `index.html` and remove following CDN link in the `<head>` lines 18-22:
-
-```html
-<!--Import materialize.css-->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-/>
-```
-
-Remove or adjust all the `classNames` related to the Materialize and feel free to use your own styling.
-
-## Eslint configurations
-
-The template extends CRA ESLint rules with a custom set, tailored for the reasonable and clean development process.
-
-Eslint rules are commented for your convenience feel free to tweak or remove them inside `.eslintrc`. No judgment.
-
-## How to create custom Create React App (CRA) templates
-
-I created a step by step guide on how to create your own templates. Check it
-
-[View on Medium](https://medium.com/@alexgrischuk/how-to-create-custom-create-react-app-cra-templates-73a5196edeb)
-
-[View blog post](https://grischuk.de/how-to-create-custom-create-react-app-cra-templates)
-
-## Thank you
-
-I hope this template will be helpful for you and you will love using it 💖!

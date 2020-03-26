@@ -1,21 +1,37 @@
-import React, { Fragment } from 'react'
-import { useSelector } from 'react-redux'
+import React, { Fragment, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 // import Plot from 'react-plotly.js';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid'
 import { useHistory } from 'react-router-dom'
+import Select from 'react-select';
 
+import { fetchData } from '../features/data/dataSlice'
 import { RootState } from '../rootReducer'
-import { ChartLine } from '../components/Chart/ChartLine';
-import { ChartGrowth } from '../components/Chart/ChartGrowth';
-import { KPI } from '../components/KPI';
+import { ChartLine } from '../components/Chart/ChartLine'
+import { ChartGrowth } from '../components/Chart/ChartGrowth'
+import { Treemap } from '../components/Chart/Treemap';
+import { KPI } from '../components/KPI'
+
+const pOptions = [
+  { value: 30, label: 'Last Month' },
+  { value: 14, label: 'Last Fortnight' },
+  { value: 7, label: 'Last Week' },
+  { value: 0, label: 'All Dates' },
+];
+
+type PeriodType = typeof pOptions[0]
 
 export const Home: React.FC = () => {
+  const dispatch = useDispatch()
+  const [period, setPeriod] = useState(pOptions[0])
   const history = useHistory()
   const data = useSelector((state: RootState) => state.data.result)
   const latestDate = data.map(row => row.date).reverse()[1]
   const latest = data.filter(row => row.date === latestDate && row.location === 'World')[0]
-
-  let world = data.filter((item) => item.location === 'World')
+  const world = data.filter((item) => item.location === 'World').slice(-period.value)
+  const latestCountries = data.filter(row => row.date === latestDate && row.location !== 'World')
+//  console.log(latestCountries)
+//  console.log(data.map(row => row.date).reverse())
 
   return (
     <Fragment>
@@ -36,6 +52,29 @@ export const Home: React.FC = () => {
       <Grid fluid>
         <Row>
           <Col xs={12} md={6}>
+            <div className="card grey lighten-4">
+              <div className="card-content">
+                <span className="card-title">Latest Date: {latestDate}</span>
+              </div>
+              <div className="card-action">
+                <button type="button" className="btn purple" onClick={() => dispatch(fetchData())}>Refresh</button>
+              </div>
+            </div>
+          </Col>
+          <Col xs={12} md={6}>
+            <div>
+              Select Period
+                <Select
+                name="select-period"
+                options={pOptions}
+                value={period}
+                onChange={selectedOption => setPeriod(selectedOption as PeriodType)}
+              />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
             <KPI
               color="purple"
               background="purple lighten-4"
@@ -51,6 +90,22 @@ export const Home: React.FC = () => {
               title="Total Deaths"
               kpi={latest ? latest.total_deaths : 0}
               change={latest ? latest.new_deaths : 0}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <Treemap
+              title={'Total Cases by Country'}
+              labels={latestCountries.map((item) => item.location)}
+              values={latestCountries.map((item) => item.total_cases)}
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <Treemap
+              title={'Total Deaths by Country'}
+              labels={latestCountries.map((item) => item.location)}
+              values={latestCountries.map((item) => item.total_deaths)}
             />
           </Col>
         </Row>

@@ -5,6 +5,7 @@ import Select from 'react-select';
 
 import { RootState } from '../rootReducer'
 
+import { KPI } from '../components/KPI'
 import { ChartLine } from '../components/Chart/ChartLine';
 import { ChartGrowth } from '../components/Chart/ChartGrowth';
 
@@ -38,8 +39,14 @@ export const Country: React.FC = () => {
   const [period, setPeriod] = useState(pOptions[0])
   const data = useSelector((state: RootState) => state.data.result)
   let fData = data.filter((item) => item.location === country.value).slice(-period.value)
+
   const countries = Array.from(new Set(data.map(item => item.location)))
   const cList: Array<CountryType> = countries.map(item => ({ value: item, label: item }))
+
+  const latestDate = fData.map(row => row.date).reverse()[0]
+  const latest = fData.filter(row => row.date === latestDate)[0]
+  console.log(latest)
+  // console.log(fData.map(row => row.date).reverse())
 
   const processCountry = (selectedOption: CountryType) => {
     fData = data.filter((item) => item.location === selectedOption.value)
@@ -72,6 +79,26 @@ export const Country: React.FC = () => {
                 onChange={selectedOption => setPeriod(selectedOption as PeriodType)}
               />
             </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <KPI
+              color="purple"
+              background="purple lighten-4"
+              title="Total Cases"
+              kpi={latest ? latest.total_cases : 0}
+              change={latest ? latest.new_cases : 0}
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <KPI
+              color="red"
+              background="pink lighten-4"
+              title="Total Deaths"
+              kpi={latest ? latest.total_deaths : 0}
+              change={latest ? latest.new_deaths : 0}
+            />
           </Col>
         </Row>
         <Row>

@@ -16,7 +16,7 @@ export const KPI: React.FC<IKPI> = (props: IKPI) => (
         {props.kpi.toLocaleString()}
       </div>
       <p>
-        Growth from previous day:
+        Growth from previous day:&nbsp;
         <span style={{ color: props.color }}>
           {props.change.toLocaleString()}
           ({(props.change * 100 / (props.kpi - props.change)).toFixed(1) + '%'})
