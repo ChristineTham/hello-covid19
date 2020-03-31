@@ -14,6 +14,9 @@
     // Disable <Fragment> => <> replacement. Feel free to change
     "react/jsx-fragments": "off",
     // Disable prefer default export
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/explicit-function-return-type": {
+      "allowExpressions": true
+    }    
   }
 }
