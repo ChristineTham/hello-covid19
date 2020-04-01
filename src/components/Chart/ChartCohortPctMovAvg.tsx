@@ -35,7 +35,6 @@ const ChartCohortPctMovAvg: React.FC<IChartLineProps> = (props: IChartLineProps)
             const datax = cData.map((item) => item.date).slice(-props.period)
             const datay = cData.map((item) => item[props.datay] as number).map((y, i, a) => movavg(a, i, 7)).slice(-props.period)
 
-            console.log(cData)
             return {
               x: datax,
               y: datay,

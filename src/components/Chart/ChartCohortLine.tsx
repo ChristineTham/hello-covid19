@@ -36,7 +36,6 @@ const ChartCohortLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
             const datax = cData.map((item) => item.date).slice(-props.period)
             const datay = cData.map((item) => item[props.datay]).slice(-props.period)
 
-            console.log(cData)
             return {
               x: datax,
               y: datay,

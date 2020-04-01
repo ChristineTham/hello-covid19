@@ -16,6 +16,15 @@ export const About: React.FC = () => {
         This app is licensed under the MIT licence and the source code is available on
          <a href="https://github.com/ChristineTham/hello-covid19.git"> GitHub</a>.
       </p>
+      <h4>Recent changes</h4>
+      <ul className="browser-default">
+        <li>Cohort Analysis - graphs by a group of countries (selectable)</li>
+        <li>Logarithmic scale switch for total cases/deaths</li>
+        <li>Legends for charts</li>
+        <li>7 day moving average (centred on current value) in percent charts</li>
+        <li>Case fatality charts</li>
+        <li>Treemaps now full width for all screen sizes</li>
+      </ul>
       <button type="button" className="btn purple" onClick={() => history.push('/')}>
         Back to home
       </button>
@@ -25,8 +34,8 @@ export const About: React.FC = () => {
           The app is written in React (with Hooks) (using the Materialize front-end framework).
           It fetches the latest CoViD-19 data as a CSV from
           <a href="https://ourworldindata.org/coronavirus-source-data"> Our World in Data </a>
-          using Papaparse asynchronously on load (using <code>async</code>/<code>await</code>) via the Papaparse
-          module via Redux Thunk into a Redux store using the Redux Toolkit.
+          using Papaparse asynchronously on load (using <code>async</code>/<code>await</code>)
+          via Redux Thunk into a Redux store using the Redux Toolkit.
         </p>
         <p>
           The data is used to render visualisations via Redux React. Data manipulation is done
@@ -45,11 +54,11 @@ export const About: React.FC = () => {
               <li className="collection-header white-text pink lighten-1"><h5>Technology Stack</h5></li>
               <li className="collection-item">Create React App with the typescript-redux template</li>
               <li className="collection-item">React (Hooks)</li>
-              <li className="collection-item">Redux, React, Redux, Redux Toolkit</li>
+              <li className="collection-item">Redux, React, React Redux, Redux Toolkit</li>
               <li className="collection-item">Materialize CSS framework</li>
               <li className="collection-item">React Flexbox Grid</li>
               <li className="collection-item">React Select</li>
-              <li className="collection-item">Plot.ly JS</li>
+              <li className="collection-item">Plotly JS</li>
               <li className="collection-item">Papaparse</li>
               <li className="collection-item">Typescript with eslint and prettier</li>
               <li className="collection-item">Visual Studio Code</li>
