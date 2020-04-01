@@ -134,6 +134,7 @@ export const Home: React.FC = () => {
               title={'Total Cases'}
               datax={world.map((item) => item.date)}
               datay={world.map((item) => item.total_cases)}
+              titley="Cases"
               period={period.value}
               color="purple"
             />
@@ -143,6 +144,7 @@ export const Home: React.FC = () => {
               title={'Total Deaths'}
               datax={world.map((item) => item.date)}
               datay={world.map((item) => item.total_deaths)}
+              titley="Deaths"
               period={period.value}
               color="red"
             />

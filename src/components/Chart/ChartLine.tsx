@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Plot from 'react-plotly.js'
+import Switch from 'react-switch'
 
 interface IChartLineProps {
   title: string;
@@ -12,10 +13,19 @@ interface IChartLineProps {
 }
 
 const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
+  const [ log, setLog ] = useState(false)
   const lastPoint = Number(props.datay[props.datay.length - 1])
   const lastLabel = lastPoint.toLocaleString()
 
   return (
+    <>
+    <div className="center">
+      <label>
+        <span>Normal  </span>
+        <Switch onChange={(checked) => {setLog(checked)}} checked={log} />
+        <span>  Logarithmic</span>
+      </label>
+    </div>
     <div>
       <Plot
         data={[
@@ -47,15 +57,22 @@ const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
             title: (props.titlex ? props.titlex : 'Date')
           },
           yaxis: {
-            title: (props.titley ? props.titley : 'Value'),           
+            title: (props.titley ? props.titley : 'Value'),
+            type: log ? 'log' : 'linear',
           },
           showlegend: true,
+          legend: {
+            x: 0.1,
+            xanchor: 'left',
+            y: 1,
+            bgcolor: 'lightgrey',
+          },
           annotations: [
             {
             xref: 'paper',
-            x: 0.9,
-            y: lastPoint*1.1,
-            xanchor: 'center',
+            x: 0.95,
+            y: log ? Math.log10(lastPoint) : lastPoint,
+            xanchor: 'left',
             yanchor: 'middle',
             text: lastLabel,
             font: {
@@ -71,6 +88,7 @@ const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
         style={{ width: "100%", height: "100%" }}
       />        
     </div>
+    </>
   )
 }
 

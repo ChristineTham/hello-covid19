@@ -114,6 +114,7 @@ export const Country: React.FC = () => {
               title={country.value + ' Total Cases'}
               datax={fData.map((item) => item.date)}
               datay={fData.map((item) => item.total_cases)}
+              titley="Cases"
               period={period.value}
               color="blue"
             />
@@ -123,6 +124,7 @@ export const Country: React.FC = () => {
               title={country.value + ' Total Deaths'}
               datax={fData.map((item) => item.date)}
               datay={fData.map((item) => item.total_deaths)}
+              titley="Deaths"
               period={period.value}
               color="red"
             />

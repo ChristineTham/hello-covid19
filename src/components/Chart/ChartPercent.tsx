@@ -69,15 +69,21 @@ const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
           yaxis: {
             title: (props.titley ? props.titley : 'Value'),
             tickformat: '.0%',
-            rangemode: 'tozero',
+            range: [0,Math.max.apply(Math, props.datay.slice(-props.period)) * 1.5],
           },
           showlegend: true,
+          legend: {
+            x: 0.1,
+            xanchor: 'left',
+            y: 1,
+            bgcolor: 'lightgrey',
+          },
           annotations: [
             {
             xref: 'paper',
-            x: 0.9,
-            y: lastPoint*0.9,
-            xanchor: 'center',
+            x: 0.95,
+            y: lastPoint,
+            xanchor: 'left',
             yanchor: 'middle',
             text: lastLabel,
             font: {
