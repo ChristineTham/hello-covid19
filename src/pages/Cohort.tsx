@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import { useSelector } from 'react-redux'
 import Select, { ActionMeta } from 'react-select'
+import { useHistory } from 'react-router-dom'
 
 import { RootState } from '../rootReducer'
 
@@ -36,6 +37,7 @@ const pOptions = [
 type PeriodType = typeof pOptions[0]
 
 export const Cohort: React.FC = () => {
+  const history = useHistory()
   const [country, setCountry] = useState(defaultCountries)
   const [period, setPeriod] = useState(pOptions[0])
   const data = useSelector((state: RootState) => state.data.result)
@@ -88,6 +90,9 @@ export const Cohort: React.FC = () => {
   return (
     <Fragment>
       <h1>Cohort Analysis</h1>
+      <button type="button" className="btn purple" onClick={() => history.push('/')}>
+        Back to home
+      </button>
       <Grid fluid>
         <Row>
           <Col xs={12} md={6}>

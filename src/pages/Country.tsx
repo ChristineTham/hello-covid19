@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import { useSelector } from 'react-redux'
 import Select from 'react-select'
+import { useHistory } from 'react-router-dom'
 
 import { RootState } from '../rootReducer'
 
@@ -35,6 +36,7 @@ const pOptions = [
 type PeriodType = typeof pOptions[0]
 
 export const Country: React.FC = () => {
+  const history = useHistory()
   const [country, setCountry] = useState(cOptions[0])
   const [period, setPeriod] = useState(pOptions[0])
   const data = useSelector((state: RootState) => state.data.result)
@@ -59,6 +61,9 @@ export const Country: React.FC = () => {
   return (
     <Fragment>
       <h1>Analysis by Country</h1>
+      <button type="button" className="btn purple" onClick={() => history.push('/')}>
+        Back to home
+      </button>
       <Grid fluid>
         <Row>
           <Col xs={12} md={6}>
@@ -133,28 +138,6 @@ export const Country: React.FC = () => {
         <Row>
           <Col xs={12} md={6}>
             <ChartPercent
-              title={country.value + ' Daily Case Growth %'}
-              datax={fData.map((item) => item.date)}
-              datay={fData.map((item) => item.case_growth)}
-              period={period.value}
-              color="cyan"
-              titley="Daily Growth %"
-            />
-          </Col>
-          <Col xs={12} md={6}>
-            <ChartPercent
-              title={country.value + ' Daily Death Growth %'}
-              datax={fData.map((item) => item.date)}
-              datay={fData.map((item) => item.death_growth)}
-              period={period.value}
-              color="orange"
-              titley="Daily Growth %"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={6}>
-            <ChartPercent
               title={country.value + ' Case Fatality'}
               datax={fData.map((item) => item.date)}
               datay={fData.map((item) => item.total_fatality)}
@@ -171,6 +154,28 @@ export const Country: React.FC = () => {
               period={period.value}
               color="green"
               titley="Deaths / Cases %"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <ChartPercent
+              title={country.value + ' Daily Case Growth %'}
+              datax={fData.map((item) => item.date)}
+              datay={fData.map((item) => item.case_growth)}
+              period={period.value}
+              color="cyan"
+              titley="Daily Growth %"
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <ChartPercent
+              title={country.value + ' Daily Death Growth %'}
+              datax={fData.map((item) => item.date)}
+              datay={fData.map((item) => item.death_growth)}
+              period={period.value}
+              color="orange"
+              titley="Daily Growth %"
             />
           </Col>
         </Row>

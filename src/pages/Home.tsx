@@ -50,13 +50,28 @@ export const Home: React.FC = () => {
         </a>
         and is based on data collected by the European CDC.
       </p>
-      <p>To view results for a specific country, click on the button</p>
       <button
         type="button"
-        className="btn purple btn-large"
+        className="btn pink lighten-1"
+        onClick={() => { history.push('/about') }}
+      >
+        About this App
+      </button>
+      <p>To view results for a specific country or cohort, click below</p>
+      <button
+        type="button"
+        className="btn purple"
         onClick={() => { history.push('/bycountry') }}
       >
-        View Results by Country
+        View by Country
+      </button>
+      &nbsp;
+      <button
+        type="button"
+        className="btn purple"
+        onClick={() => { history.push('/cohort') }}
+      >
+        View Cohort
       </button>
       <Grid fluid>
         <Row>
@@ -153,28 +168,6 @@ export const Home: React.FC = () => {
         <Row>
           <Col xs={12} md={6}>
             <ChartPercent
-              title={'Daily Case Growth %'}
-              datax={world.map((item) => item.date)}
-              datay={world.map((item) => item.case_growth)}
-              period={period.value}
-              color="blue"
-              titley="Daily Growth %"
-            />
-          </Col>
-          <Col xs={12} md={6}>
-            <ChartPercent
-              title={'Daily Death Growth %'}
-              datax={world.map((item) => item.date)}
-              datay={world.map((item) => item.death_growth)}
-              period={period.value}
-              color="orange"
-              titley="Daily Growth %"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={6}>
-            <ChartPercent
               title={'Case Fatality'}
               datax={world.map((item) => item.date)}
               datay={world.map((item) => item.total_fatality)}
@@ -191,6 +184,28 @@ export const Home: React.FC = () => {
               period={period.value}
               color="green"
               titley="Deaths / Cases %"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <ChartPercent
+              title={'Daily Case Growth %'}
+              datax={world.map((item) => item.date)}
+              datay={world.map((item) => item.case_growth)}
+              period={period.value}
+              color="blue"
+              titley="Daily Growth %"
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <ChartPercent
+              title={'Daily Death Growth %'}
+              datax={world.map((item) => item.date)}
+              datay={world.map((item) => item.death_growth)}
+              period={period.value}
+              color="orange"
+              titley="Daily Growth %"
             />
           </Col>
         </Row>
