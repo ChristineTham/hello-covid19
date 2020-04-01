@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { covid19Data } from '../../api/covid19Data'
 
+import { DataType } from './data.types'
+
 export interface DataState {
   isFetching: boolean
   lastFetched: number
-  result: any[]
+  result: DataType[]
 }
 
 const initialState: DataState = {
@@ -15,7 +17,7 @@ const initialState: DataState = {
 
 const dataSlice = createSlice({
   name: 'data',
-  initialState: initialState,
+  initialState,
   reducers: {
     requestData(state) {
       if (!state.isFetching) {

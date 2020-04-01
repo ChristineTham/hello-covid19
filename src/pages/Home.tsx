@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
       <button
         type="button"
         className="btn purple btn-large"
-        onClick={() => history.push('/bycountry')}
+        onClick={() => { history.push('/bycountry') }}
       >
         View Results by Country
       </button>
@@ -69,7 +69,7 @@ export const Home: React.FC = () => {
                 <button
                   type="button"
                   className="btn purple"
-                  onClick={() => dispatch(fetchData())}
+                  onClick={() => { dispatch(fetchData()) }}
                 >
                   Refresh
                 </button>
@@ -83,7 +83,7 @@ export const Home: React.FC = () => {
                 name="select-period"
                 options={pOptions}
                 value={period}
-                onChange={(selectedOption) =>
+                onChange={(selectedOption) => 
                   setPeriod(selectedOption as PeriodType)
                 }
               />

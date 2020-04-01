@@ -15,6 +15,9 @@ export const Navbar: React.FC = () => (
             <NavLink to="/">Home</NavLink>
           </li>
           <li>
+            <NavLink to="/cohort">Cohort</NavLink>
+          </li>
+          <li>
             <NavLink to="/bycountry">By Country</NavLink>
           </li>
           <li>
