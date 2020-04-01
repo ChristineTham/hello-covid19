@@ -6,8 +6,8 @@ import Select from 'react-select'
 import { RootState } from '../rootReducer'
 
 import { KPI } from '../components/KPI'
-import { ChartLine } from '../components/Chart/ChartLine'
-import { ChartGrowth } from '../components/Chart/ChartGrowth'
+import ChartLine from '../components/Chart/ChartLine'
+import ChartPercent from '../components/Chart/ChartPercent'
 
 type CountryType = {
   value: string
@@ -38,9 +38,7 @@ export const Country: React.FC = () => {
   const [country, setCountry] = useState(cOptions[0])
   const [period, setPeriod] = useState(pOptions[0])
   const data = useSelector((state: RootState) => state.data.result)
-  let fData = data
-    .filter((item) => item.location === country.value)
-    .slice(-period.value)
+  let fData = data.filter((item) => item.location === country.value)
 
   const countries = Array.from(new Set(data.map((item) => item.location)))
   const cList: Array<CountryType> = countries.map((item) => ({
@@ -116,6 +114,7 @@ export const Country: React.FC = () => {
               title={country.value + ' Total Cases'}
               datax={fData.map((item) => item.date)}
               datay={fData.map((item) => item.total_cases)}
+              period={period.value}
               color="blue"
             />
           </Col>
@@ -124,30 +123,28 @@ export const Country: React.FC = () => {
               title={country.value + ' Total Deaths'}
               datax={fData.map((item) => item.date)}
               datay={fData.map((item) => item.total_deaths)}
+              period={period.value}
               color="red"
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={country.value + ' Daily Case Growth %'}
               datax={fData.map((item) => item.date)}
-              datay={fData.map(
-                (item) => item.new_cases / (item.total_cases - item.new_cases)
-              )}
+              datay={fData.map((item) => item.case_growth)}
+              period={period.value}
               color="cyan"
               titley="Daily Growth %"
             />
           </Col>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={country.value + ' Daily Death Growth %'}
               datax={fData.map((item) => item.date)}
-              datay={fData.map(
-                (item) =>
-                  item.new_deaths / (item.total_deaths - item.new_deaths)
-              )}
+              datay={fData.map((item) => item.death_growth)}
+              period={period.value}
               color="orange"
               titley="Daily Growth %"
             />
@@ -155,19 +152,21 @@ export const Country: React.FC = () => {
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={country.value + ' Case Fatality'}
               datax={fData.map((item) => item.date)}
-              datay={fData.map((item) => item.total_deaths / item.total_cases)}
+              datay={fData.map((item) => item.total_fatality)}
+              period={period.value}
               color="pink"
               titley="Deaths / Cases %"
             />
           </Col>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={country.value + ' Daily Fatality %'}
               datax={fData.map((item) => item.date)}
-              datay={fData.map((item) => item.new_deaths / item.new_cases)}
+              datay={fData.map((item) => item.daily_fatality)}
+              period={period.value}
               color="green"
               titley="Deaths / Cases %"
             />

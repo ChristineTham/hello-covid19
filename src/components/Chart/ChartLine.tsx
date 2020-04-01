@@ -1,35 +1,38 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Plot from 'react-plotly.js'
 
 interface IChartLineProps {
   title: string;
   datax: any[];
   datay: any[];
+  period: number
   color?: string;
   titlex?: string;
   titley?: string;
 }
 
-export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
+const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => {
   const lastPoint = Number(props.datay[props.datay.length - 1])
   const lastLabel = lastPoint.toLocaleString()
 
   return (
-    <Fragment>
+    <div>
       <Plot
         data={[
           {
-            x: props.datax,
-            y: props.datay,
+            x: props.datax.slice(-props.period),
+            y: props.datay.slice(-props.period),
             type: 'scatter',
+            line: {shape: 'spline'},
             mode: 'lines+markers',
-            name: 'cases',
+            name: 'Cases',
             marker: { color: props.color ? props.color : 'black'},
           },
           {
             x: props.datax.slice(-1),
             y: props.datay.slice(-1),
             type: 'scatter',
+            name: 'Latest',
             mode: 'markers',
             hoverinfo: 'skip',
             marker: {
@@ -44,15 +47,15 @@ export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => 
             title: (props.titlex ? props.titlex : 'Date')
           },
           yaxis: {
-            title: (props.titley ? props.titley : 'Value')
+            title: (props.titley ? props.titley : 'Value'),           
           },
-          showlegend: false,
+          showlegend: true,
           annotations: [
             {
             xref: 'paper',
-            x: 0.95,
-            y: lastPoint,
-            xanchor: 'left',
+            x: 0.9,
+            y: lastPoint*1.1,
+            xanchor: 'center',
             yanchor: 'middle',
             text: lastLabel,
             font: {
@@ -66,7 +69,9 @@ export const ChartLine: React.FC<IChartLineProps> = (props: IChartLineProps) => 
         }}
         useResizeHandler
         style={{ width: "100%", height: "100%" }}
-      />
-    </Fragment>
+      />        
+    </div>
   )
 }
+
+export default ChartLine

@@ -27,6 +27,13 @@ const dataSlice = createSlice({
         state.isFetching = false
         state.result = action.payload
       }
+      state.result = state.result.map((item) => ({
+        ...item,
+        total_fatality: item.total_deaths / item.total_cases,
+        daily_fatality: item.new_deaths / item.new_cases,
+        case_growth: item.new_cases / (item.total_cases - item.new_cases),
+        death_growth: item.new_deaths / (item.total_deaths - item.new_deaths),
+      }))
     },
   },
 })

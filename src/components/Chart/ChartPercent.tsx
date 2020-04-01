@@ -2,15 +2,24 @@ import React, { Fragment } from 'react'
 import Plot from 'react-plotly.js'
 
 interface IChartLineProps {
-  title: string;
-  datax: any[];
-  datay: any[];
-  color?: string;
-  titlex?: string;
-  titley?: string;
+  title: string
+  datax: any[]
+  datay: any[]
+  period: number
+  color?: string
+  titlex?: string
+  titley?: string
 }
 
-export const ChartGrowth: React.FC<IChartLineProps> = (props: IChartLineProps) => {
+function movavg(a: number[], i: number, period: number): number {
+  const start = Math.max(0,i - (period - 1) / 2)
+  const end = Math.min(a.length, i + 1 + (period - 1) / 2)
+  const n = end - start
+  // return a.slice(Math.max(0,i - period),i).reduce((a, b) => a + b, 0) / Math.min(i + 1,period)
+  return a.slice(start, end).reduce((a, b) => a + b, 0) / Math.min(n,period)
+}
+
+const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
   const lastPoint = Number(props.datay[props.datay.length - 1])
   const lastLabel = (lastPoint * 100).toFixed(1) + '%'
 
@@ -19,16 +28,30 @@ export const ChartGrowth: React.FC<IChartLineProps> = (props: IChartLineProps) =
       <Plot
         data={[
           {
-            x: props.datax,
-            y: props.datay,
+            x: props.datax.slice(-props.period),
+            y: props.datay.map((y, i, a) => movavg(a, i, 7)).slice(-props.period),
+            name: 'week average',
+            type: 'scatter',
+            mode: 'lines',
+            line: {shape: 'spline'},
+            hoverinfo: 'skip',
+            marker: { color: 'grey'},
+          },
+          {
+            x: props.datax.slice(-props.period),
+            y: props.datay.slice(-props.period),
+            name: 'daily',
             type: 'scatter',
             mode: 'lines+markers',
+            line: {shape: 'spline'},
+            hoverinfo: 'y+x',
             hovertemplate: '%{y:.1%}',
             marker: { color: props.color ? props.color : 'black'},
           },
           {
             x: props.datax.slice(-1),
             y: props.datay.slice(-1),
+            name: 'latest',
             type: 'scatter',
             mode: 'markers',
             hoverinfo: 'skip',
@@ -46,14 +69,15 @@ export const ChartGrowth: React.FC<IChartLineProps> = (props: IChartLineProps) =
           yaxis: {
             title: (props.titley ? props.titley : 'Value'),
             tickformat: '.0%',
+            rangemode: 'tozero',
           },
-          showlegend: false,
+          showlegend: true,
           annotations: [
             {
             xref: 'paper',
-            x: 0.95,
-            y: lastPoint,
-            xanchor: 'left',
+            x: 0.9,
+            y: lastPoint*0.9,
+            xanchor: 'center',
             yanchor: 'middle',
             text: lastLabel,
             font: {
@@ -71,3 +95,5 @@ export const ChartGrowth: React.FC<IChartLineProps> = (props: IChartLineProps) =
     </Fragment>
   )
 }
+
+export default ChartPercent

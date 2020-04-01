@@ -7,8 +7,8 @@ import Select from 'react-select'
 
 import { fetchData } from '../features/data/dataSlice'
 import { RootState } from '../rootReducer'
-import { ChartLine } from '../components/Chart/ChartLine'
-import { ChartGrowth } from '../components/Chart/ChartGrowth'
+import ChartLine from '../components/Chart/ChartLine'
+import ChartPercent from '../components/Chart/ChartPercent'
 import { Treemap } from '../components/Chart/Treemap'
 import { KPI } from '../components/KPI'
 
@@ -30,14 +30,13 @@ export const Home: React.FC = () => {
   const latest = data.filter(
     (row) => row.date === latestDate && row.location === 'World'
   )[0]
-  const world = data
-    .filter((item) => item.location === 'World')
-    .slice(-period.value)
+  const world = data.filter((item) => item.location === 'World')
   const latestCountries = data.filter(
     (row) => row.date === latestDate && row.location !== 'World'
   )
   //  console.log(latestCountries)
   //  console.log(data.map(row => row.date).reverse())
+  // console.log(world)
 
   return (
     <Fragment>
@@ -135,6 +134,7 @@ export const Home: React.FC = () => {
               title={'Total Cases'}
               datax={world.map((item) => item.date)}
               datay={world.map((item) => item.total_cases)}
+              period={period.value}
               color="purple"
             />
           </Col>
@@ -143,30 +143,28 @@ export const Home: React.FC = () => {
               title={'Total Deaths'}
               datax={world.map((item) => item.date)}
               datay={world.map((item) => item.total_deaths)}
+              period={period.value}
               color="red"
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={'Daily Case Growth %'}
               datax={world.map((item) => item.date)}
-              datay={world.map(
-                (item) => item.new_cases / (item.total_cases - item.new_cases)
-              )}
+              datay={world.map((item) => item.case_growth)}
+              period={period.value}
               color="blue"
               titley="Daily Growth %"
             />
           </Col>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={'Daily Death Growth %'}
               datax={world.map((item) => item.date)}
-              datay={world.map(
-                (item) =>
-                  item.new_deaths / (item.total_deaths - item.new_deaths)
-              )}
+              datay={world.map((item) => item.death_growth)}
+              period={period.value}
               color="orange"
               titley="Daily Growth %"
             />
@@ -174,19 +172,21 @@ export const Home: React.FC = () => {
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={'Case Fatality'}
               datax={world.map((item) => item.date)}
-              datay={world.map((item) => item.total_deaths / item.total_cases)}
+              datay={world.map((item) => item.total_fatality)}
+              period={period.value}
               color="pink"
               titley="Deaths / Cases %"
             />
           </Col>
           <Col xs={12} md={6}>
-            <ChartGrowth
+            <ChartPercent
               title={'Daily Fatality %'}
               datax={world.map((item) => item.date)}
-              datay={world.map((item) => item.new_deaths / item.new_cases)}
+              datay={world.map((item) => item.daily_fatality)}
+              period={period.value}
               color="green"
               titley="Deaths / Cases %"
             />
