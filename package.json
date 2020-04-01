@@ -1,5 +1,5 @@
 {
-  "name": "covid19",
+  "name": "hello-covid19",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -48,7 +48,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "fix": "eslint --ext .js,.jsx,.ts,.tsx  --fix ./",
-    "surge": "surge build https://hello-covid19.surge.sh"
+    "deploy": "surge build https://hello-covid19.surge.sh"
   },
   "eslintConfig": {
     "extends": "react-app"

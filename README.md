@@ -54,6 +54,8 @@ In the project directory, you can run:
 
 - `yarn fix` - same as `yarn lint`, but also fixes errors, when possible. Typical use case: local development environment, git hooks.
 
+- `yarn deploy` - deploy to production using surge.sh
+
 Due to CRA template limitations (we can change only `scripts` and `dependencies` inside generated `package.json`) all configuration is done by adding config files where possible. Also no `devDependencies` for now, sorry.
 
 ## Testing
