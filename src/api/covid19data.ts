@@ -1,7 +1,7 @@
 import * as Papa from 'papaparse'
 
 export function covid19Data() {
-  const url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
+  const url = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
   return new Promise((resolve, reject) => {
     Papa.parse(url, {
       download: true,
