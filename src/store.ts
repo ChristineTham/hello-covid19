@@ -7,10 +7,19 @@ const store = configureStore({
   reducer: rootReducer,
 })
 
-if (process.env.NODE_ENV === 'development' && (module as any).hot) {
-  (module as any).hot.accept('./rootReducer', () => {
-    const newRootReducer = require('./rootReducer').default
-    store.replaceReducer(newRootReducer)
+if (
+  process.env.NODE_ENV === 'development' &&
+  (
+    module as NodeModule & {
+      hot?: { accept: (path: string, cb: () => void) => void }
+    }
+  ).hot
+) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(module as any).hot.accept('./rootReducer', () => {
+    import('./rootReducer').then((module) => {
+      store.replaceReducer(module.default)
+    })
   })
 }
 

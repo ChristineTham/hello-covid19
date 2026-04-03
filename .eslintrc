@@ -5,8 +5,7 @@
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "plugin:prettier/recommended"
   ],
   "rules": {
     // Make prettier code formatting suggestions more verbose.
@@ -15,8 +14,8 @@
     "react/jsx-fragments": "off",
     // Disable prefer default export
     "import/prefer-default-export": "off",
-    "@typescript-eslint/explicit-function-return-type": {
+    "@typescript-eslint/explicit-function-return-type": ["warn", {
       "allowExpressions": true
-    }    
+    }]
   }
 }

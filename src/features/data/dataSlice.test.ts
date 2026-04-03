@@ -1,6 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import data, { requestData, receiveData, fetchData, DataState } from './dataSlice'
+import data, {
+  requestData,
+  receiveData,
+  fetchData,
+  DataState,
+} from './dataSlice'
 
 const initialState: DataState = {
   isFetching: false,
@@ -9,16 +14,16 @@ const initialState: DataState = {
 }
 
 test('data actions', () => {
-  expect(data(undefined, {})).toEqual(initialState)
+  expect(data(undefined, { type: '' })).toEqual(initialState)
 
   expect(
     data(undefined, {
       type: requestData.type,
     })
   ).toEqual({
-    "isFetching": true,
-    "lastFetched": 0,
-    "result": [],
+    isFetching: true,
+    lastFetched: 0,
+    result: [],
   })
 
   expect(
