@@ -33,7 +33,7 @@ const pOptions = [
   { value: 0, label: 'All Dates' },
 ]
 
-type PeriodType = typeof pOptions[0]
+type PeriodType = (typeof pOptions)[0]
 
 export const Country: React.FC = () => {
   const history = useHistory()
@@ -53,7 +53,7 @@ export const Country: React.FC = () => {
   // console.log(latestDate)
   // console.log(fData.map(row => row.date).reverse())
 
-  const processCountry = (selectedOption: CountryType) => {
+  const processCountry = (selectedOption: CountryType): void => {
     fData = data.filter((item) => item.location === selectedOption.value)
     setCountry(selectedOption)
   }
@@ -61,7 +61,11 @@ export const Country: React.FC = () => {
   return (
     <Fragment>
       <h1>Analysis by Country</h1>
-      <button type="button" className="btn purple" onClick={() => history.push('/')}>
+      <button
+        type="button"
+        className="btn purple"
+        onClick={() => history.push('/')}
+      >
         Back to home
       </button>
       <Grid fluid>

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import { useSelector } from 'react-redux'
-import Select, { ActionMeta } from 'react-select'
+import Select, { ActionMeta, ValueType } from 'react-select'
 import { useHistory } from 'react-router-dom'
 
 import { RootState } from '../rootReducer'
@@ -34,7 +34,7 @@ const pOptions = [
   { value: 0, label: 'All Dates' },
 ]
 
-type PeriodType = typeof pOptions[0]
+type PeriodType = (typeof pOptions)[0]
 
 export const Cohort: React.FC = () => {
   const history = useHistory()
@@ -48,41 +48,48 @@ export const Cohort: React.FC = () => {
   }))
   const countries = country.map((c) => c.value)
 
-  function copy(aObject: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function copy<T = any>(aObject: T): T {
     if (!aObject) {
-      return aObject;
+      return aObject
     }
-  
-    let v;
-    let bObject: typeof aObject = Array.isArray(aObject) ? [] : {};
+
+    let v
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const bObject: any = Array.isArray(aObject) ? [] : {}
     for (const k in aObject) {
-      v = aObject[k];
-      bObject[k] = (typeof v === "object") ? copy(v) : v;
+      v = aObject[k]
+      bObject[k] = typeof v === 'object' ? copy(v) : v
     }
-  
-    return bObject;
+
+    return bObject
   }
 
-  const processCountry = (selectedOption: CountryType, action: ActionMeta) => {
+  const processCountry = (
+    selectedOption: ValueType<CountryType, true>,
+    action: ActionMeta<CountryType>
+  ): void => {
     let newCountries = copy(country)
-    switch (action.action)
-    {
-    case "remove-value":
-      const i = newCountries.indexOf(selectedOption)
-      newCountries.splice(i,1)
-      break
-    case "pop-value":
-      newCountries.pop()
-      break
-    case "select-option":
-      newCountries = selectedOption
-      break
-    case "set-value":
-      newCountries.push(copy(selectedOption))
-      break
-    case "clear":
-      newCountries = [];
-      break
+    switch (action.action) {
+      case 'remove-value': {
+        const i = action.removedValue
+          ? newCountries.indexOf(action.removedValue)
+          : -1
+        if (i >= 0) newCountries.splice(i, 1)
+        break
+      }
+      case 'pop-value':
+        newCountries.pop()
+        break
+      case 'select-option':
+        newCountries = selectedOption ? [...selectedOption] : []
+        break
+      case 'set-value':
+        newCountries = selectedOption ? [...selectedOption] : []
+        break
+      case 'clear':
+        newCountries = []
+        break
     }
     setCountry(newCountries)
   }
@@ -90,7 +97,11 @@ export const Cohort: React.FC = () => {
   return (
     <Fragment>
       <h1>Cohort Analysis</h1>
-      <button type="button" className="btn purple" onClick={() => history.push('/')}>
+      <button
+        type="button"
+        className="btn purple"
+        onClick={() => history.push('/')}
+      >
         Back to home
       </button>
       <Grid fluid>
@@ -106,7 +117,10 @@ export const Cohort: React.FC = () => {
                 options={cList}
                 value={country}
                 onChange={(selectedOption, action) =>
-                  processCountry(selectedOption as CountryType, action)
+                  processCountry(
+                    selectedOption as ValueType<CountryType, true>,
+                    action
+                  )
                 }
               />
             </div>

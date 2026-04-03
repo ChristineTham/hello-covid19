@@ -3,7 +3,9 @@ import Plot from 'react-plotly.js'
 
 interface IChartLineProps {
   title: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   datax: any[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   datay: any[]
   period: number
   color?: string
@@ -12,11 +14,11 @@ interface IChartLineProps {
 }
 
 function movavg(a: number[], i: number, period: number): number {
-  const start = Math.max(0,i - (period - 1) / 2)
+  const start = Math.max(0, i - (period - 1) / 2)
   const end = Math.min(a.length, i + 1 + (period - 1) / 2)
   const n = end - start
   // return a.slice(Math.max(0,i - period),i).reduce((a, b) => a + b, 0) / Math.min(i + 1,period)
-  return a.slice(start, end).reduce((a, b) => a + b, 0) / Math.min(n,period)
+  return a.slice(start, end).reduce((a, b) => a + b, 0) / Math.min(n, period)
 }
 
 const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
@@ -29,13 +31,15 @@ const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
         data={[
           {
             x: props.datax.slice(-props.period),
-            y: props.datay.map((y, i, a) => movavg(a, i, 7)).slice(-props.period),
+            y: props.datay
+              .map((y, i, a) => movavg(a, i, 7))
+              .slice(-props.period),
             name: 'week average',
             type: 'scatter',
             mode: 'lines',
-            line: {shape: 'spline'},
+            line: { shape: 'spline' },
             hoverinfo: 'skip',
-            marker: { color: 'grey'},
+            marker: { color: 'grey' },
           },
           {
             x: props.datax.slice(-props.period),
@@ -43,10 +47,10 @@ const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
             name: 'daily',
             type: 'scatter',
             mode: 'lines+markers',
-            line: {shape: 'spline'},
+            line: { shape: 'spline' },
             hoverinfo: 'y+x',
             hovertemplate: '%{y:.1%}',
-            marker: { color: props.color ? props.color : 'black'},
+            marker: { color: props.color ? props.color : 'black' },
           },
           {
             x: props.datax.slice(-1),
@@ -62,14 +66,17 @@ const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
           },
         ]}
         layout={{
-          title: props.title,
+          title: { text: props.title },
           xaxis: {
-            title: (props.titlex ? props.titlex : 'Date')
+            title: { text: props.titlex ? props.titlex : 'Date' },
           },
           yaxis: {
-            title: (props.titley ? props.titley : 'Value'),
+            title: { text: props.titley ? props.titley : 'Value' },
             tickformat: '.0%',
-            range: [0,Math.max.apply(Math, props.datay.slice(-props.period)) * 1.5],
+            range: [
+              0,
+              Math.max.apply(Math, props.datay.slice(-props.period)) * 1.5,
+            ],
           },
           showlegend: true,
           legend: {
@@ -80,23 +87,23 @@ const ChartPercent: React.FC<IChartLineProps> = (props: IChartLineProps) => {
           },
           annotations: [
             {
-            xref: 'paper',
-            x: 0.95,
-            y: lastPoint,
-            xanchor: 'left',
-            yanchor: 'middle',
-            text: lastLabel,
-            font: {
-              family: 'Arial',
-              size: 16,
-              color: 'black'
-            },
-            showarrow: false
+              xref: 'paper',
+              x: 0.95,
+              y: lastPoint,
+              xanchor: 'left',
+              yanchor: 'middle',
+              text: lastLabel,
+              font: {
+                family: 'Arial',
+                size: 16,
+                color: 'black',
+              },
+              showarrow: false,
             },
           ],
         }}
         useResizeHandler
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: '100%', height: '100%' }}
       />
     </Fragment>
   )

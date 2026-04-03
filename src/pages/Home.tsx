@@ -19,7 +19,7 @@ const pOptions = [
   { value: 0, label: 'All Dates' },
 ]
 
-type PeriodType = typeof pOptions[0]
+type PeriodType = (typeof pOptions)[0]
 
 export const Home: React.FC = () => {
   const dispatch = useDispatch()
@@ -53,7 +53,9 @@ export const Home: React.FC = () => {
       <button
         type="button"
         className="btn pink lighten-1"
-        onClick={() => { history.push('/about') }}
+        onClick={() => {
+          history.push('/about')
+        }}
       >
         About this App
       </button>
@@ -61,7 +63,9 @@ export const Home: React.FC = () => {
       <button
         type="button"
         className="btn purple"
-        onClick={() => { history.push('/bycountry') }}
+        onClick={() => {
+          history.push('/bycountry')
+        }}
       >
         View by Country
       </button>
@@ -69,7 +73,9 @@ export const Home: React.FC = () => {
       <button
         type="button"
         className="btn purple"
-        onClick={() => { history.push('/cohort') }}
+        onClick={() => {
+          history.push('/cohort')
+        }}
       >
         View Cohort
       </button>
@@ -84,7 +90,9 @@ export const Home: React.FC = () => {
                 <button
                   type="button"
                   className="btn purple"
-                  onClick={() => { dispatch(fetchData()) }}
+                  onClick={() => {
+                    dispatch(fetchData())
+                  }}
                 >
                   Refresh
                 </button>
@@ -98,7 +106,7 @@ export const Home: React.FC = () => {
                 name="select-period"
                 options={pOptions}
                 value={period}
-                onChange={(selectedOption) => 
+                onChange={(selectedOption) =>
                   setPeriod(selectedOption as PeriodType)
                 }
               />

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { covid19Data } from '../../api/covid19Data'
+import { covid19Data } from '../../api/covid19data'
 
 import { DataType } from './data.types'
 
@@ -43,10 +43,12 @@ const dataSlice = createSlice({
 export const { requestData, receiveData } = dataSlice.actions
 
 // Define a thunk that dispatches those action creators
-export const fetchData = () => async (dispatch: (action: { payload: unknown; type: string }) => void) => {
-  dispatch(requestData())
-  const response = await covid19Data()
-  dispatch(receiveData(response))
-}
+export const fetchData =
+  () =>
+  async (dispatch: (action: { payload: unknown; type: string }) => void) => {
+    dispatch(requestData())
+    const response = await covid19Data()
+    dispatch(receiveData(response))
+  }
 
 export default dataSlice.reducer

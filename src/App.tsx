@@ -21,7 +21,8 @@ const App: React.FC = () => {
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
           <Route path="/bycountry" component={Country} />
-          <Route path="/cohort" component={Cohort} />        </div>
+          <Route path="/cohort" component={Cohort} />{' '}
+        </div>
       </Switch>
     </HashRouter>
   )
