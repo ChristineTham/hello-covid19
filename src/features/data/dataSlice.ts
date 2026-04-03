@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { covid19Data } from '../../api/covid19Data'
+import { covid19Data } from '../../api/covid19data'
 
 import { DataType } from './data.types'
 

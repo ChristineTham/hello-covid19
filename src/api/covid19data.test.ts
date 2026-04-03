@@ -1,4 +1,4 @@
-import { covid19Data } from './covid19Data'
+import { covid19Data } from './covid19data'
 
 test('returns data', () => {
   return covid19Data().then((data) => {
